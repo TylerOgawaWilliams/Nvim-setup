@@ -18,8 +18,14 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    { import = "lazyvim.plugins.extras.ai", enabled = false},
     -- import/override with your plugins
     { import = "plugins" },
+    { "zbirenbaum/copilot.lua", enabled = false},
+    { "blink.cmp", enabled=false},
+    { "nvim-cmp", enabled=true},
+    { "copilot-cmp", enabled=false},
+    { "blink-cmp-copilot", enabled=false},
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -52,3 +58,18 @@ require("lazy").setup({
     },
   },
 })
+
+-- Custom Function to Permanently Clear Messages
+local function clear_messages()
+  -- Clear the command-line area
+  vim.api.nvim_echo({}, false, {}) -- Clears normal command-line messages
+
+  -- Clear errors (if any are currently displayed)
+  vim.api.nvim_set_vvar("errmsg", "") -- Clears the 'v:errmsg' variable
+end
+
+-- Keybinding to Clear Messages
+vim.api.nvim_set_keymap("n", "<leader>cL", ":lua clear_messages()<CR>", { noremap = true, silent = true })
+
+-- Command to Clear Messages
+vim.api.nvim_create_user_command("ClearMessages", clear_messages, {})

@@ -81,20 +81,5 @@ map('i', '{', '{}<Left>', {
   desc = "Auto-pair parentheses"
 })
 
--- Make Enter key go between parentheses when pressed after opening one
-map('i', '<CR>', function()
-  local cursor_pos = vim.api.nvim_win_get_cursor(0)
-  local line = vim.api.nvim_get_current_line()
-  local col = cursor_pos[2]
-  -- Check if cursor is between parentheses
-  if col < #line and line:sub(col+1, col+1) == '}' and line:sub(col, col) == '{' then
-    return '<CR><Esc>O'
-  else
-    return '<CR>'
-  end
-end, {
-  noremap = true,
-  expr = true,
-  desc = "Smart Enter between parentheses"
-})
 
+map("n", "<C-a>", "ggVG", {desc = "Highlight everything within the file"})
